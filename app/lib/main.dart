@@ -1,6 +1,11 @@
+import 'package:app/create_todo.dart';
+import 'package:app/provider/todo_list_notifier.dart';
+import 'package:app/todo_list.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-main() {
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const App());
 }
 
@@ -9,9 +14,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(),
+      home: ChangeNotifierProvider(
+        create: (context) => TodoListNotifier(),
+        child: const Scaffold(
+          body: TodoList(),
+          floatingActionButton: CreateTodoButton(),
+        ),
+      ),
     );
   }
 }
